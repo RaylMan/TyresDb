@@ -1,0 +1,11 @@
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/TyresDb/bin
+/TyresDb/obj
+/TyresDb.Model/bin
+/TyresDb.Model/obj
+/TyresDbTest/bin
+/TyresDbTest/obj
