@@ -15,14 +15,16 @@ namespace TyresDb.ViewModels
         private readonly Tyre tyre;
         private readonly ChangeWeightWindow changeWeightWindow;
         private readonly Action fillTableAction;
-        
+
         private string weight;
         public string Weight
         {
             get { return weight; }
             set
             {
-                weight = value;
+                if (value.IsTextAllowed())
+                    weight = value;
+
                 RaisedPropertyChanged("Weight");
             }
         }
@@ -84,7 +86,7 @@ namespace TyresDb.ViewModels
                     MessageBox.Show("Необходимо указать число.", "Ошибка");
                     return;
                 }
-                
+
             }
             catch (Exception e)
             {

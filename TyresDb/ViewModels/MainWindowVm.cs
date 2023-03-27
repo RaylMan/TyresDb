@@ -2,8 +2,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using TyresDb.Model;
 using TyresDb.Views;
 
@@ -28,13 +30,16 @@ namespace TyresDb.ViewModels
             }
         }
 
+
+
         private string aspectRatio;
         public string AspectRatio
         {
             get { return aspectRatio; }
             set
             {
-                aspectRatio = value;
+                if (value.IsTextAllowed())
+                    aspectRatio = value;
 
                 tyrePropertyChanged();
                 RaisedPropertyChanged("AspectRatio");
@@ -47,7 +52,9 @@ namespace TyresDb.ViewModels
             get { return diameter; }
             set
             {
-                diameter = value;
+                if (value.IsTextAllowed())
+                    diameter = value;
+
                 tyrePropertyChanged();
                 RaisedPropertyChanged("Diameter");
             }
@@ -59,7 +66,9 @@ namespace TyresDb.ViewModels
             get { return width; }
             set
             {
-                width = value;
+                if (value.IsTextAllowed())
+                    width = value;
+
                 tyrePropertyChanged();
                 RaisedPropertyChanged("Width");
             }
@@ -201,13 +210,19 @@ namespace TyresDb.ViewModels
 
         private void FilterTyres()
         {
+            var customWidth = Width.GetDoubleFromString();
+            var customDiameter = Diameter.GetDoubleFromString();
+            var customAspectRatio = AspectRatio.GetDoubleFromString();
+
             var filteredTyres = tyresRepository.Tyres.Where(t =>
-                        t.Width == Width.GetDoubleFromString()
-                        && t.Diameter == Diameter.GetDoubleFromString()
-                        && t.AspectRatio == AspectRatio.GetDoubleFromString());
+                                        (IsZero(customWidth) ? true : t.Width == customWidth)
+                                        && (IsZero(customDiameter) ? true : t.Diameter == customDiameter)
+                                        && (IsZero(customAspectRatio) ? true : t.AspectRatio == customAspectRatio));
 
             Tyres = filteredTyres.ToObservableCollection();
         }
+
+        private bool IsZero(double number) => number == 0;
         #endregion
     }
 }

@@ -27,14 +27,15 @@
                  Width ="40" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="129,0,0,0" FontSize="18"
                 />
 
-        <Button  Content=" Расчитать " Command="{Binding CalculareCustomDiametrCommand}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="183,0,0,0" Height="26" Width="63"></Button>
+        <Button Content=" Расчитать " Command="{Binding CalculareCustomDiametrCommand}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="183,0,0,0" Height="26"/>
 
-        <Label  Grid.Row="0" Content="Диаметр, мм" VerticalAlignment="Top" HorizontalAlignment="Left" Height="26" Width="83" Margin="241,1,0,0"/>
-        <TextBox Text="{Binding ResutDiameter}"  Width ="40" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="261,0,0,0" FontSize="18"/>
+        <Label  Grid.Row="0" Content="Диаметр, мм" VerticalAlignment="Top" HorizontalAlignment="Left" Height="26" Width="84" Margin="248,1,0,0"/>
+        <TextBox Text="{Binding ResutDiameter}"  Width ="40" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="266,0,0,0" FontSize="18"/>
 
-        <DataGrid x:Name="dtgCounts" ItemsSource="{Binding Tyres, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,45" SelectedItem="{Binding SelectedRow}"
+        <DataGrid x:Name="tyresGrid" ItemsSource="{Binding Tyres, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,45" SelectedItem="{Binding SelectedRow}"
                   AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False" 
-                  SelectionMode="Single" HorizontalGridLinesBrush="#FF999999" VerticalGridLinesBrush="#FF999999"  FontSize="18">
+                  SelectionMode="Single" HorizontalGridLinesBrush="#FF999999" VerticalGridLinesBrush="#FF999999"  FontSize="18"
+                  LoadingRow="tyresGrid_LoadingRow" >
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Изменить вес" Command="{Binding ChangeWeightCommand}" CommandParameter="{Binding SelectedRow}" />
