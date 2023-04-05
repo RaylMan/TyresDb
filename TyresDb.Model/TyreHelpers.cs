@@ -58,6 +58,18 @@ namespace TyresDb.Model
             }
         }
 
+        public static string TryGetStringValue(this string[] values, int index)
+        {
+            try
+            {
+                return values[index];
+            }
+            catch (Exception)
+            {
+                return default;
+            }
+        }
+
         public static ObservableCollection<Tyre> ToObservableCollection(this IEnumerable<Tyre> tyres)
         {
             return new ObservableCollection<Tyre>(tyres);

@@ -2,11 +2,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using TyresDb.Model;
+using TyresDb.Types;
 using TyresDb.Views;
 
 namespace TyresDb.ViewModels
@@ -38,7 +37,7 @@ namespace TyresDb.ViewModels
             get { return aspectRatio; }
             set
             {
-                if (value.IsTextAllowed())
+                if (value.IsDigit())
                     aspectRatio = value;
 
                 tyrePropertyChanged();
@@ -52,7 +51,7 @@ namespace TyresDb.ViewModels
             get { return diameter; }
             set
             {
-                if (value.IsTextAllowed())
+                if (value.IsDigit())
                     diameter = value;
 
                 tyrePropertyChanged();
@@ -66,7 +65,7 @@ namespace TyresDb.ViewModels
             get { return width; }
             set
             {
-                if (value.IsTextAllowed())
+                if (value.IsDigit())
                     width = value;
 
                 tyrePropertyChanged();
@@ -158,41 +157,132 @@ namespace TyresDb.ViewModels
             }
         }
 
-        public void ShowAll(object o)
-        {
-            ShowAll();
-        }
-
-        public void ShowAll()
+        public void ShowAll(object parametr)
         {
             Tyres = tyresRepository.Tyres.ToObservableCollection();
         }
         #endregion
 
-        #region ShowAllCommand
-        private ICommand changeWeightCommand;
-        public ICommand ChangeWeightCommand
+        #region ChangeCommand
+        private ICommand сhangeCommand;
+        public ICommand ChangeCommand
         {
             get
             {
-                if (changeWeightCommand == null)
+                if (сhangeCommand == null)
                 {
-                    changeWeightCommand = new RelayCommand(new Action<object>(ChangeWeight));
+                    сhangeCommand = new RelayCommand(new Action<object>(Change));
                 }
-                return changeWeightCommand;
+                return сhangeCommand;
             }
             set
             {
-                changeWeightCommand = value;
-                RaisedPropertyChanged("ChangeWeightCommand");
+                сhangeCommand = value;
+                RaisedPropertyChanged("ChangeCommand");
             }
         }
 
-        public void ChangeWeight(object o)
+        public void Change(object parametr)
         {
-            var win = new ChangeWeightWindow(tyresRepository, (Tyre)o, ShowAll);
+            if (parametr == null)
+                return;
+
+            var win = new ChangeWeightWindow(WindowType.Update, tyresRepository, (Tyre)parametr, tyrePropertyChanged);
 
             win.ShowDialog();
+        }
+        #endregion
+
+        #region DuplicateCommand
+        private ICommand duplicateCommand;
+        public ICommand DuplicateCommand
+        {
+            get
+            {
+                if (duplicateCommand == null)
+                {
+                    duplicateCommand = new RelayCommand(new Action<object>(Duplicate));
+                }
+                return duplicateCommand;
+            }
+            set
+            {
+                duplicateCommand = value;
+                RaisedPropertyChanged("DuplicateCommand");
+            }
+        }
+
+        public void Duplicate(object parametr)
+        {
+            if (parametr == null)
+                return;
+
+            Add(parametr);
+        }
+        #endregion
+
+        #region AddCommand
+        private ICommand addCommand;
+        public ICommand AddCommand
+        {
+            get
+            {
+                if (addCommand == null)
+                {
+                    addCommand = new RelayCommand(new Action<object>(Add));
+                }
+                return addCommand;
+            }
+            set
+            {
+                addCommand = value;
+                RaisedPropertyChanged("AddCommand");
+            }
+        }
+
+        public void Add(object parametr)
+        {
+            var newTyre = new Tyre();
+            
+            if(parametr != null && parametr is Tyre && ((Tyre)parametr).Validate(out var err))
+            {
+                newTyre = ((Tyre)parametr).Clone();
+            }
+            var win = new ChangeWeightWindow(WindowType.Create, tyresRepository, newTyre, tyrePropertyChanged);
+            win.ShowDialog();
+        }
+        #endregion
+
+        #region DeleteCommand
+        private ICommand deleteCommand;
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (deleteCommand == null)
+                {
+                    deleteCommand = new RelayCommand(new Action<object>(Delete));
+                }
+                return deleteCommand;
+            }
+            set
+            {
+                deleteCommand = value;
+                RaisedPropertyChanged("DeleteCommand");
+            }
+        }
+
+        public void Delete(object parametr)
+        {
+            if (parametr == null)
+                return;
+
+            var tyre = (Tyre)parametr;
+
+            tyresRepository.Tyres.Remove(tyre);
+
+            tyresRepository.Save();
+            tyrePropertyChanged();
         }
         #endregion
 

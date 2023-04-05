@@ -3,9 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TyresDb.Views"
         mc:Ignorable="d"
-        Title="Расчет габаритов шин" Height="344" Width="550" MinHeight="344" MinWidth="550" WindowStartupLocation="CenterScreen">
+        Title="Расчет габаритов шин" Height="344" Width="745" MinHeight="344" MinWidth="745" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"></RowDefinition>
@@ -38,18 +37,23 @@
                   LoadingRow="tyresGrid_LoadingRow" >
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Изменить вес" Command="{Binding ChangeWeightCommand}" CommandParameter="{Binding SelectedRow}" />
+                    <MenuItem Header="Изменить" Command="{Binding ChangeCommand}" CommandParameter="{Binding SelectedRow}" />
+                    <MenuItem Header="Дублировать" Command="{Binding DuplicateCommand}" CommandParameter="{Binding SelectedRow}" />
+                    <MenuItem Header="Удалить" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedRow}" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Ширина" Binding="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Профиль" Binding="{Binding Path=AspectRatio, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Диаментр, дюйм" Binding="{Binding Path=Diameter, UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="True"/>
                 <DataGridTextColumn Header="Вес, кг" Binding="{Binding Path=Weight, UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Диаметр, мм" Binding="{Binding Path=ResultHeigh, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Сезон" Binding="{Binding Path=Season, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
 
         <Button Content=" Показать все " Grid.Row="1" Command="{Binding ShowAllCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5,10" FontSize="18"></Button>
+        <Button Content=" Добавить " Grid.Row="1" Command="{Binding AddCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="137,0,0,10" FontSize="18"></Button>
     </Grid>
 </Window>

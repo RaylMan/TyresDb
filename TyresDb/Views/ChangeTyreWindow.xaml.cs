@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using TyresDb.Model;
+using TyresDb.Types;
 using TyresDb.ViewModels;
 
 namespace TyresDb.Views
@@ -10,10 +11,15 @@ namespace TyresDb.Views
     /// </summary>
     public partial class ChangeWeightWindow : Window
     {
-        public ChangeWeightWindow(ITyresRepository tyresRepository, Tyre tyre, Action fillTableAction)
+        public ChangeWeightWindow(
+            WindowType windowType,
+            ITyresRepository tyresRepository, 
+            Tyre tyre, 
+            Action fillTableAction)
         {
             InitializeComponent();
-            DataContext = new ChangeWeightWindowVm(tyresRepository, tyre, this, fillTableAction);
+            var vm = new ChangeTyreWindowVm(windowType, tyresRepository, tyre, this, fillTableAction);
+            DataContext = vm;
         }
     }
 }

@@ -1,0 +1,109 @@
+﻿<Window x:Class="TyresDb.Views.ChangeWeightWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TyresDb.Views"
+        mc:Ignorable="d"
+        Title="{Binding WindowName}" Height="254" Width="400" WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Имя" Grid.Column="0"
+               VerticalAlignment="Center" HorizontalAlignment="left" 
+               />
+        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="0"
+                 VerticalAlignment="Center" 
+                 FontSize="16" Grid.ColumnSpan="3" Margin="33,0,10,0">
+            <TextBox.InputBindings>
+                <KeyBinding  Key="Enter" Command="{Binding EnterKeyDownCommand}"
+                             CommandParameter="{Binding Name, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
+            </TextBox.InputBindings>
+        </TextBox>
+
+        <Label Content="Ширина" Grid.Column="0"  
+               VerticalAlignment="Top" HorizontalAlignment="Center" 
+               Grid.Row="1"/>
+        <TextBox Text="{Binding Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                 Grid.Row="1" 
+                 VerticalAlignment="Top" HorizontalAlignment="Center" 
+                 Width="67" Margin="0,22,0,0" FontSize="16">
+            <TextBox.InputBindings>
+                <KeyBinding  Key="Enter" Command="{Binding EnterKeyDownCommand}"
+                             CommandParameter="{Binding Width, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
+            </TextBox.InputBindings>
+        </TextBox>
+
+        <Label Content="Профиль" 
+               Grid.Row="1" Grid.Column="1"
+               VerticalAlignment="Top" HorizontalAlignment="Center" 
+              />
+        <TextBox Text="{Binding AspectRatio, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                 Grid.Row="1" Grid.Column="1"
+                 VerticalAlignment="Top" HorizontalAlignment="Center" 
+                 Width="67" Margin="0,22,0,0" FontSize="16">
+            <TextBox.InputBindings>
+                <KeyBinding  Key="Enter" Command="{Binding EnterKeyDownCommand}"
+                             CommandParameter="{Binding AspectRatio, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
+            </TextBox.InputBindings>
+        </TextBox>
+
+        <Label Content="Диаметр" 
+               Grid.Row="1" Grid.Column="2" 
+               VerticalAlignment="Top" HorizontalAlignment="Center" 
+               />
+        <TextBox Text="{Binding Diameter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                 Grid.Row="1" Grid.Column="2"
+                 VerticalAlignment="Top" HorizontalAlignment="Center" 
+                 Width="67" Margin="0,22,0,0" FontSize="16">
+            <TextBox.InputBindings>
+                <KeyBinding  Key="Enter" Command="{Binding EnterKeyDownCommand}"
+                             CommandParameter="{Binding Diameter, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
+            </TextBox.InputBindings>
+        </TextBox>
+
+        <Label Content="Вес" 
+               Grid.Row="2" Grid.Column="0"
+               VerticalAlignment="Top" HorizontalAlignment="Center" 
+               />
+        <TextBox Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                 Grid.Row="2" Grid.Column="0"
+                 VerticalAlignment="Top" HorizontalAlignment="Center" 
+                 Width="67" Margin="0,22,0,0" FontSize="16" >
+            <TextBox.InputBindings>
+                <KeyBinding  Key="Enter" Command="{Binding EnterKeyDownCommand}"
+                             CommandParameter="{Binding Weight, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
+            </TextBox.InputBindings>
+        </TextBox>
+
+        <Label Content="Сезон" 
+               Grid.Row="2" Grid.Column="1"
+               VerticalAlignment="Top" HorizontalAlignment="Center" 
+               />
+        <TextBox Text="{Binding Season, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                 Grid.Row="2" Grid.Column="1"
+                 VerticalAlignment="Top" HorizontalAlignment="Center"  
+                 Width="67" Margin="0,22,0,0" FontSize="16">
+            <TextBox.InputBindings>
+                <KeyBinding  Key="Enter" Command="{Binding EnterKeyDownCommand}"
+                             CommandParameter="{Binding Season, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
+            </TextBox.InputBindings>
+        </TextBox>
+
+        <Button Content=" Сохранить " Command="{Binding SaveCommand}" 
+                Grid.Row="3"  Grid.Column="1"
+                VerticalAlignment="Center" HorizontalAlignment="Center" 
+                Margin="5"/>
+    </Grid>
+</Window>

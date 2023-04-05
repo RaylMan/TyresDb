@@ -40,6 +40,8 @@ namespace TyresDb.Model
                         AspectRatio = values.TryGetDoubleValue(1),
                         Diameter = values.TryGetDoubleValue(2),
                         Weight = values.TryGetDoubleValue(3),
+                        Name = values.TryGetStringValue(4),
+                        Season = values.TryGetStringValue(5)
                     };
 
                     if (!tyre.Validate(out var error))
@@ -58,7 +60,6 @@ namespace TyresDb.Model
             errorText = errors.ToString();
             return errors.Length == 0;
         }
-
 
         public void Save()
         {
